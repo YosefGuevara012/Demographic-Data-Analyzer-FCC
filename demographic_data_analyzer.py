@@ -6,21 +6,28 @@ def calculate_demographic_data(print_data=True):
     df = pd.read_csv('adult.data.csv')
 
     # How many of each race are represented in this dataset? This should be a Pandas series with race names as the index labels.
-    race_count = None
+    race_count = list(df["race"].unique())
 
     # What is the average age of men?
-    average_age_men = df[df["sex"] == "Male"]["age"].mean()
+    average_age_men = round(df[df["sex"] == "Male"]["age"].mean(),1)
 
     # What is the percentage of people who have a Bachelor's degree?
+    n = float(len(df))
     bachelors = df[df["education"] == "Bachelors"]
-    percentage_bachelors = float(len(bachelors)) / float(len(df))*100
-    
+    percentage_bachelors = round(float(len(bachelors)) / n *100, 1)
+
     # What percentage of people with advanced education (`Bachelors`, `Masters`, or `Doctorate`) make more than 50K?
     # What percentage of people without advanced education make more than 50K?
 
     # with and without `Bachelors`, `Masters`, or `Doctorate`
-    higher_education = None
-    lower_education = None
+    masters = df[df["education"] == "Masters"]
+    doctorates = df[df["education"] == "Doctorate"]
+
+    percentage_masters = round(float(len(masters)) /n *100, 1) 
+    percentage_doctorate = round(float(len(doctorates)) / n *100, 1)
+
+    higher_education = percentage_bachelors + percentage_masters + percentage_doctorate
+    lower_education =  100 - higher_education
 
     # percentage with salary >50K
     higher_education_rich = None
