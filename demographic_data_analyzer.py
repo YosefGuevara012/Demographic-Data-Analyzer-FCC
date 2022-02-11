@@ -27,11 +27,13 @@ def calculate_demographic_data(print_data=True):
 
     # percentage with salary >50K
 
-    higher_education_rich = HE[HE["salary"] == ">50k"] / len(HE) * 100
+    HE_50K = HE[HE["salary"] == ">50K"] 
+
+    higher_education_rich = percentage(HE_50K, df)
     lower_education_rich = None
 
     # What is the minimum number of hours a person works per week (hours-per-week feature)?
-    min_work_hours = None
+    min_work_hours = df["hours-per-week"].min()
 
     # What percentage of the people who work the minimum number of hours per week have a salary of >50K?
     num_min_workers = None
