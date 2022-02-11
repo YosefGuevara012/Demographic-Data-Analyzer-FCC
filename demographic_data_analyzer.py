@@ -12,25 +12,22 @@ def calculate_demographic_data(print_data=True):
     average_age_men = round(df[df["sex"] == "Male"]["age"].mean(),1)
 
     # What is the percentage of people who have a Bachelor's degree?
-    n = float(len(df))
     bachelors = df[df["education"] == "Bachelors"]
-    percentage_bachelors = round(float(len(bachelors)) / n *100, 1)
+    percentage_bachelors = percentage(bachelors,df)
 
     # What percentage of people with advanced education (`Bachelors`, `Masters`, or `Doctorate`) make more than 50K?
     # What percentage of people without advanced education make more than 50K?
 
     # with and without `Bachelors`, `Masters`, or `Doctorate`
-    masters = df[df["education"] == "Masters"]
-    doctorates = df[df["education"] == "Doctorate"]
+    # HE high education
+    HE = df[df["education"].isin(["Bachelors", "Masters", "Doctorate"])]
 
-    percentage_masters = round(float(len(masters)) /n *100, 1) 
-    percentage_doctorate = round(float(len(doctorates)) / n *100, 1)
-
-    higher_education = percentage_bachelors + percentage_masters + percentage_doctorate
+    higher_education = percentage(HE,df)
     lower_education =  100 - higher_education
 
     # percentage with salary >50K
-    higher_education_rich = None
+
+    higher_education_rich = HE[HE["salary"] == ">50k"] / len(HE) * 100
     lower_education_rich = None
 
     # What is the minimum number of hours a person works per week (hours-per-week feature)?
@@ -75,3 +72,10 @@ def calculate_demographic_data(print_data=True):
         highest_earning_country_percentage,
         'top_IN_occupation': top_IN_occupation
     }
+
+def percentage(series_1, series_2):
+
+    len_1 = float(len(series_1))
+    len_2 = float(len(series_2))
+
+    return round(len_1 / len_2 * 100, 1)
