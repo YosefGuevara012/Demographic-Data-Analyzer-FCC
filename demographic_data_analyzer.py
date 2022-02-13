@@ -2,6 +2,9 @@ import pandas as pd
 
 
 def calculate_demographic_data(print_data=True):
+
+    n = float(len(df))
+
     # Read data from file
     df = pd.read_csv('adult.data.csv')
 
@@ -42,8 +45,14 @@ def calculate_demographic_data(print_data=True):
     rich_percentage = percentage(num_min_workers,df)
 
     # What country has the highest percentage of people that earn >50K?
+
+    earn_more_50K = df[df["salary"] == ">50K"]
+    
+    count_earn_more_50K = earn_more_50K.iloc[:,-2].value_counts()
+
     highest_earning_country = None
-    highest_earning_country_percentage = None
+    
+    highest_earning_country_percentage = count_earn_more_50K[0] / n * 100
 
     # Identify the most popular occupation for those who earn >50K in India.
     top_IN_occupation = None
