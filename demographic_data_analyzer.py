@@ -3,10 +3,10 @@ import pandas as pd
 
 def calculate_demographic_data(print_data=True):
 
-    n = float(len(df))
-
     # Read data from file
     df = pd.read_csv('adult.data.csv')
+
+    n = float(len(df))
 
     # How many of each race are represented in this dataset? This should be a Pandas series with race names as the index labels.
     race_count = list(df["race"].unique())
@@ -50,12 +50,15 @@ def calculate_demographic_data(print_data=True):
     
     count_earn_more_50K = earn_more_50K.iloc[:,-2].value_counts()
 
-    highest_earning_country = None
-    
-    highest_earning_country_percentage = count_earn_more_50K[0] / n * 100
+    highest_earning_country = count_earn_more_50K.idxmax()
+
+    highest_earning_country_percentage = round(count_earn_more_50K.max() / n * 100, 1)
 
     # Identify the most popular occupation for those who earn >50K in India.
-    top_IN_occupation = None
+
+    india = earn_more_50K[earn_more_50K["native-country"] == "India"]
+
+    top_IN_occupation = india.occupation.value_counts().idxmax()
 
     # DO NOT MODIFY BELOW THIS LINE
 
