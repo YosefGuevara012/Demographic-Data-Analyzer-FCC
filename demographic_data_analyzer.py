@@ -34,7 +34,7 @@ def calculate_demographic_data(print_data=True):
     HE_50K = HE[HE["salary"] == ">50K"]
     LE_50K = LE[LE["salary"] == ">50K"]
 
-    higher_education_rich = percentage(HE_50K, df)
+    higher_education_rich = percentage(HE_50K, HE)
     lower_education_rich = percentage(LE_50K, LE)
 
     # What is the minimum number of hours a person works per week (hours-per-week feature)?
