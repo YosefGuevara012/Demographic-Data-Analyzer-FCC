@@ -54,12 +54,17 @@ def calculate_demographic_data(print_data=True):
     # What country has the highest percentage of people that earn >50K?
 
     earn_more_50K = df[df["salary"] == ">50K"]
+
+    citizens_per_country = df.iloc[:,-2].value_counts().sort_index()
     
-    count_earn_more_50K = earn_more_50K.iloc[:,-2].value_counts()
+    count_earn_more_50K = earn_more_50K.iloc[:,-2].value_counts().sort_index()
 
-    highest_earning_country = count_earn_more_50K.idxmax()
+    percentage_rich = count_earn_more_50K.div(citizens_per_country)
 
-    highest_earning_country_percentage = round(count_earn_more_50K.max() / n * 100, 5)
+
+    highest_earning_country = percentage_rich.idxmax()
+
+    highest_earning_country_percentage = round(percentage_rich.max() * 100, 1)
 
     # Identify the most popular occupation for those who earn >50K in India.
 
